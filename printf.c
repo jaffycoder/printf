@@ -9,11 +9,13 @@
  */
 int _printf(const char *format, ...)
 {
-	int char_printed = 0, str_len;
+	int character_printed = 0;
 	va_list args;
+	char *temp_str;
+	int str_len;
 
-		if (!format)
-		return (-1);
+	if (!format)
+	return (-1);
 	va_start(args, format);
 
 	while (*format)
@@ -21,32 +23,38 @@ int _printf(const char *format, ...)
 	if (*format != '%')
 	{
 		write(1, format, 1);
-		char_printed++;
+		character_printed++;
 	}
 	else
 	{
 		format++;
 		if (*format == '\0')
 		break;
-	if (*format == '%' || *format == 'c')
-	{
+	if (*format == '%')
+		{
 		write(1, format, 1);
-		char_printed++;
-	}
-	else if (*format == 's')
-	{
-		char *str = va_arg(args, char*);
+		character_printed++;
+		}
+		else if (*format == 'c')
+		{
+		char c = (char) va_arg(args, int);
 
+		write(1, &c, 1);
+		character_printed++;
+		}
+		else if (*format == 's')
+		{
+		temp_str = va_arg(args, char*);
 		str_len = 0;
-		while (str[str_len])
-			str_len++;
-		write(1, str, str_len);
-		char_printed += str_len;
-	}
+		while (temp_str[str_len])
+		str_len++;
+		write(1, temp_str, str_len);
+		character_printed += str_len;
+		}
 	}
 	format++;
 	}
 
 	va_end(args);
-	return (char_printed);
+	return (character_printed);
 }
