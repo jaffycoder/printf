@@ -55,5 +55,5 @@ int _printf(const char *format, ...)
 
 	va_end(list_of_arguments);
 
-	return character_printed;
+	return (character_printed);
 }
